@@ -14,6 +14,7 @@
   justify-content: space-evenly;
   padding: 30px;
   flex-wrap: wrap;
+  margin-top: 75px;
 }
 
 .admin-top-right-content {

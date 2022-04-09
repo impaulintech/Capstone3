@@ -6,9 +6,9 @@ import dummy from "../assets/images/dummy.png";
 
 const HeroBanner = () => {
   const [userStatus, dispatch, localProduct] = useContext(UserContext);
-  let random = Number(localStorage.getItem("random"));
+  let spotlight = Number(localStorage.getItem("spotlight"));
   let x = [];
-  localProduct === undefined ? null : (x = localProduct.product[random]);
+  localProduct === undefined ? null : (x = localProduct.product[spotlight]);
 
   const { name, price, image, _id: id } = x;
 

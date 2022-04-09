@@ -24,16 +24,16 @@ function ButtonSm({ id }) {
       </a>
       <button
         className="add-to-cart-sm"
-        onMouseLeave={() => {
-          setTimeout(() => {
-            document.querySelector(".popup-order-complete").style.display =
-              "none";
-          }, 3000);
-        }}
         onClick={() => {
-          userStatus.id === true
-            ? AddToCart(id, 1, "cart", null)
-            : AddToCart(id, 1, "visitor", null);
+          if (userStatus.id === true) {
+            AddToCart(id, 1, "cart", null);
+            setTimeout(() => {
+              document.querySelector(".popup-order-complete").style.display =
+                "none";
+            }, 3000);
+          } else {
+            AddToCart(id, 1, "visitor", null);
+          }
         }}
       >
         {userStatus.isAdmin === true ? "Disable" : "Add to cart"}

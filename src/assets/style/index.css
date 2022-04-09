@@ -62,6 +62,11 @@ footer {
 .socmed {
   margin: 50px 0 10px 0;
 }
+.nav {
+  width: 100%;
+  position: fixed;
+  background-color: black;
+}
 
 .card {
   width: 300px;
@@ -99,6 +104,10 @@ footer {
 }
 .card > .image:hover {
   cursor: pointer;
+}
+.customer-details {
+  padding: 0 12px;
+  margin-bottom: 30px;
 }
 .card:hover {
   border-right: 3px solid #be3144;
@@ -167,11 +176,31 @@ nav {
   flex-wrap: wrap;
   align-items: center;
   gap: 2rem;
-  margin-right: 10px;
+  margin-right: 60px;
 }
 .cart * {
   cursor: pointer;
 }
+.right-plate > h3 {
+  color: rgb(199, 199, 199);
+}
+.color-disable + span {
+  font-weight: 300;
+}
+.empty-cart {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.empty-cart > img {
+  width: 50%;
+}
+.empty-cart > h1 {
+  color: var(--font-color-primary);
+}
+
 .popup-order-complete {
   display: none;
   position: fixed;
@@ -196,12 +225,40 @@ nav {
   z-index: 999;
 }
 
+.header-checkout {
+  overflow: hidden;
+}
+.header-checkout > h2 {
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+form * {
+  overflow: hidden;
+}
+
+input[type="radio"] + img {
+  width: 50%;
+  border-radius: 20%;
+}
+
+.payment-method > * {
+  width: 100px;
+}
+.payment-method {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 0;
+}
+
 .menu {
   display: block;
 }
 
-input[type="email"] {
-  width: 100%;
+input[type="email"],
+input[type="text"] {
+  width: 98%;
   height: 36px;
   border: none;
   border-radius: 3px;
@@ -246,7 +303,46 @@ input[type="submit"] {
   color: var(--font-color-primary);
   background-color: var(--color-primary);
 }
+
+.left-checkout-container {
+  width: 50%;
+  height: 100vh;
+  background-position: 0%;
+  border-radius: 0 10% 10% 0;
+  background-color: var(--color-primary);
+  background-image: url("../images/smoke.png");
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.left-checkout-content {
+  height: 72%;
+  width: 72%;
+  overflow-y: scroll;
+}
+
+.left-checkout-container > h2 {
+  margin-top: 90px;
+  padding: 20px;
+}
+
+.checkout-plate {
+  display: flex;
+}
+
 @media only screen and (max-width: 1000px) {
+  .left-checkout-container > h2 {
+    margin-top: 50px;
+  }
+  .left-checkout-container {
+    width: 100vw;
+    height: 50vh;
+    background-position: 0%;
+    border-radius: 0 0 20% 20%;
+  }
   .toggle {
     display: none;
   }
@@ -254,8 +350,8 @@ input[type="submit"] {
     flex-direction: column;
     width: 100%;
     justify-content: space-between;
-    position: fixed;
     background-color: #01060c;
+    position: fixed;
   }
   .x {
     display: block;

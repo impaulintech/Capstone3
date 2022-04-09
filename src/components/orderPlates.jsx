@@ -25,11 +25,11 @@ const OrderPlates = ({ id }) => {
           <h3>user@mail.com</h3>
         </div>
         <h3 className="dim">
-          Total Order: &nbsp; <span className="color-secondary">333</span>
-        </h3>
-        <h3 className="dim">
           Total Amount:&nbsp;
           <span className="color-secondary">PHP 9,999</span>
+        </h3>
+        <h3 className="dim">
+          Date Ordered: &nbsp; <span className="color-secondary">3/3/3</span>
         </h3>
       </div>
       <div className={`admin-bot-plates-bot x-${id}`}>

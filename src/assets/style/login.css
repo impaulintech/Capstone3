@@ -3,13 +3,19 @@
   height: 100vh;
 }
 
+.error-message {
+  display: none;
+  margin-top: 30px;
+  color: var(--color-primary);
+}
+
 .nav-login > h1 {
   text-transform: uppercase;
   font-family: var(--font-primary);
   font-size: 27;
 }
 .nav-login {
-  position: absolute;
+  position: fixed;
 }
 
 .login-container {
@@ -53,6 +59,7 @@
 .right-container > div > h2 {
   font-size: 24px;
   font-weight: 300;
+  color: var(--font-color-disabled);
 }
 
 .right-container > form * > h2 {
@@ -78,5 +85,14 @@
   .right-container {
     width: 100vw;
     padding: 20px;
+    height: 100%;
+  }
+  .nav-login {
+    background-color: var(--color-primary);
+    padding: 10px;
+    width: 100%;
+  }
+  .right-container {
+    margin-bottom: 50px;
   }
 }

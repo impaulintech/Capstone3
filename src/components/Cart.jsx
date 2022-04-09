@@ -1,14 +1,15 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext } from "react";
 import "../assets/style/cart.css";
 import { UserContext } from "../utils/UserContext";
 import logo from "../assets/images/logo.png";
 
 const Cart = () => {
-  const [userStatus, dispatch, localProduct, AddToCart, cart] =
-    useContext(UserContext);
+  const [x, xx, localProduct, AddToCart, cart] = useContext(UserContext);
   let totalPrice = 0;
   let cartData = [];
   const localCart = localStorage.getItem("cart");
+  const target = document.querySelector(".cart-container");
 
   cart.map((eachId) => {
     for (let i = 0; i < localProduct.product.length; i++) {
@@ -33,7 +34,6 @@ const Cart = () => {
           <div className="order-container">
             <div className="header">
               <img
-                style={{ cursor: "pointer" }}
                 src="https://i.imgur.com/SEihV05.png"
                 alt="close"
                 width="36"
@@ -42,24 +42,13 @@ const Cart = () => {
                     "none")
                 }
               />
-
-              <h1 style={{ margin: "0px auto" }}>Check Out </h1>
+              <h1>Check Out</h1>
             </div>
 
             {cart.length === 0 ? (
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <img src={logo} alt="logo" style={{ width: "50%" }} />
-                <h1 style={{ color: "var(--color-primary)" }}>
-                  Your cart is empty!
-                </h1>
+              <div className="empty-cart">
+                <img src={logo} alt="logo" />
+                <h1>Your cart is empty!</h1>
               </div>
             ) : (
               <div className="cart-order-list">
@@ -74,15 +63,13 @@ const Cart = () => {
                         style={{ backgroundImage: `url("${item.image}")` }}
                       ></div>
                       <div className="right-plate">
-                        <h3 style={{ color: "var(--color-secondary)" }}>
-                          {item.name}
-                        </h3>
+                        <h3>{item.name}</h3>
                         <span>
                           <strong className="color-disable">
                             Price:&nbsp;
                           </strong>
 
-                          <span style={{ fontWeight: 300 }}>
+                          <span>
                             &#8369;{item.price.toLocaleString("en-US")}
                           </span>
                         </span>
@@ -90,15 +77,13 @@ const Cart = () => {
                           <strong className="color-disable">
                             Quantity:&nbsp;
                           </strong>
-                          <span style={{ fontWeight: 300 }}>
-                            {item.qty.toLocaleString("en-US")}
-                          </span>
+                          <span>{item.qty.toLocaleString("en-US")}</span>
                         </span>
                         <span>
                           <strong className="color-disable">
                             Sub Total:&nbsp;
                           </strong>
-                          <span style={{ fontWeight: 300 }}>
+                          <span>
                             &#8369;
                             {(item.price * item.qty).toLocaleString("en-US")}
                           </span>
@@ -127,14 +112,6 @@ const Cart = () => {
                                     "onchange"
                                   );
                                 }
-                                setTimeout(() => {
-                                  AddToCart(
-                                    item._id,
-                                    e.target.value,
-                                    "change",
-                                    "onchange"
-                                  );
-                                }, 1000);
                               }}
                             />
                             <button
@@ -163,25 +140,33 @@ const Cart = () => {
             )}
           </div>
           <div className="bot-content">
-            <h2 className="total">
-              TOTAL:{" "}
-              <span style={{ color: "white" }}>
-                &#8369; {totalPrice.toLocaleString("en-US")}
-              </span>
-            </h2>
+            <div>
+              <h2 className="total">
+                TOTAL:&nbsp;
+                <span>&#8369; {totalPrice.toLocaleString("en-US")}</span>
+              </h2>
+            </div>
             <button
               className="check-out"
               onClick={() => {
-                console.log("check out");
-                console.log("Total: ", totalPrice);
-                console.log("Orders: ", JSON.parse(localCart));
+                if (localCart === null || JSON.parse(localCart).length <= 0) {
+                  console.log("empty cart");
+                } else {
+                  window.location = "/checkout";
+                }
               }}
             >
-              CHECK OUT
+              CHECKOUT
             </button>
-            <a href={"/products"}>
-              <button className="continue-shopping">CONTINUE SHOPPING</button>
-            </a>
+
+            <button
+              className="continue-shopping"
+              onClick={() => {
+                window.location = "/products";
+              }}
+            >
+              <a href={"/products"}>CONTINUE SHOPPING</a>
+            </button>
           </div>
         </div>
       </div>

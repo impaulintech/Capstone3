@@ -7,7 +7,14 @@ body {
   background-color: var(--color-primary);
   color: var(--font-color-primary);
 }
-
+.checkout-number {
+  width: 98%;
+  height: 36px;
+  border: none;
+  border-radius: 3px;
+  font-size: 21px;
+  padding-left: 10px;
+}
 .product-model {
   display: flex;
   justify-content: center;
@@ -16,6 +23,7 @@ body {
   align-items: center;
   padding: 45px 0;
   flex-wrap: wrap-reverse;
+  margin-top: 75px;
 }
 .model-image {
   background-size: 90%;

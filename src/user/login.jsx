@@ -1,10 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "../assets/style/login.css";
 import { Link } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
+import { Authenticator } from "../utils/Authenticator";
 
 const Login = () => {
-  const [userStatus, dispatch, localProduct] = useContext(UserContext);
+  const [userStatus] = useContext(UserContext);
+  const [username, setUsername] = useState([]);
+  const [password, setPassword] = useState([]);
+
   return (
     <>
       {userStatus.isAdmin === null && userStatus.id === null ? (
@@ -22,21 +26,43 @@ const Login = () => {
               <div>
                 <h1>Let's you sign in</h1>
                 <h2>Welcome Cloud Vapers</h2>
+                <h3 className="error-message">[!] {}</h3>
               </div>
-              <form>
+              <form method="post">
                 <div>
                   <h2>Email</h2>
-                  <input type="email" name="email" autoFocus="autoFocus" />
+                  <input
+                    type="email"
+                    name="email"
+                    autoFocus="autoFocus"
+                    autoComplete="off"
+                    onChange={(e) => {
+                      setUsername(e.target.value);
+                    }}
+                  />
                 </div>
                 <div>
                   <h2>Password</h2>
-                  <input type="password" name="password" />
+                  <input
+                    type="password"
+                    name="password"
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                  />
                 </div>
                 <div>
                   <input type="checkbox" name="checkbox" />
                   <label htmlFor="checkbox"> Keep me logged in</label>
                 </div>
-                <input type="submit" value="Sign In" />
+                <input
+                  type="submit"
+                  value="Sign In"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    Authenticator(username, password, "login");
+                  }}
+                />
               </form>
 
               <div>

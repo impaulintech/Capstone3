@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import Form from "../components/Form";
 import dummy from "../assets/images/dummy.png";
 import { UserContext } from "../utils/UserContext";
+import Footer from "../components/Footer";
 
 const AddProduct = () => {
   const [userStatus, dispatch, localProduct] = useContext(UserContext);
@@ -18,6 +19,7 @@ const AddProduct = () => {
             }
             image={dummy}
           />
+          <Footer />
         </React.Fragment>
       ) : (
         (window.location = "/")

@@ -13,9 +13,9 @@ export const UserProvider = (props) => {
   const userStatus = JSON.parse(localStorage.getItem("user"));
   const localProduct = JSON.parse(localStorage.getItem("product"));
   const localCart = JSON.parse(localStorage.getItem("cart"));
-  const checkUser = localStorage.getItem("user");
   const [cart, setCart] = useState([]);
-  checkUser
+
+  userStatus
     ? null
     : localStorage.setItem(
         "user",
@@ -24,6 +24,7 @@ export const UserProvider = (props) => {
           isAdmin: null,
         })
       );
+
   const reducer = (state, action) => {
     switch (action.type) {
       case "userLogin":
@@ -40,6 +41,9 @@ export const UserProvider = (props) => {
 
       case "resetData":
         localStorage.removeItem("cart");
+        localStorage.removeItem("token");
+        localStorage.removeItem("info");
+        localStorage.removeItem("orders");
         return localStorage.setItem(
           "user",
           JSON.stringify({ id: null, isAdmin: null })
@@ -77,17 +81,15 @@ export const UserProvider = (props) => {
         );
       });
 
+    setInterval(() => {
+      // console.log("spotlight");
+      let x = Math.floor(Math.random() * localProduct.product.length - 1);
+      localStorage.setItem("spotlight", x < 0 ? x * x : x >= 6 ? 3 : x);
+    }, 30000);
+
     if (localCart !== null) {
       setCart(localCart);
     }
-  }, []);
-
-  useEffect(() => {
-    setInterval(() => {
-      let x = Math.floor(Math.random() * localProduct.product.length - 1);
-      // console.log(x, x === -1 ? 0 : x);
-      localStorage.setItem("random", x < 0 ? x * x : x >= 6 ? 3 : x);
-    }, 30000);
   }, []);
 
   const checkData = () => {
@@ -103,44 +105,47 @@ export const UserProvider = (props) => {
     });
     let idIndex = idArray.indexOf(id);
     let check = idArray.includes(id);
+    let pushItem = (item) => {
+      localStorage.setItem("cart", JSON.stringify(item));
+    };
 
     if (check) {
       switch (action) {
         case "remove":
           getCart.splice(idIndex, 1);
           setCart(getCart);
-          return localStorage.setItem("cart", JSON.stringify(getCart));
+          return pushItem(getCart);
         case "decrement":
           getCart[idIndex].qty -= Number(value);
-          if (getCart[idIndex].qty <= 0) {
+          if (value <= 0) {
             getCart.splice(idIndex, 1);
-            localStorage.setItem("cart", JSON.stringify(getCart));
-            return setCart(getCart);
+            setCart(getCart);
+            return pushItem(getCart);
           }
           setCart(getCart);
-          return localStorage.setItem("cart", JSON.stringify(getCart));
+          return pushItem(getCart);
         case "increment":
           getCart[idIndex].qty += Number(value);
           setCart(getCart);
-          return localStorage.setItem("cart", JSON.stringify(getCart));
+          return pushItem(getCart);
         case "onchange":
           getCart[idIndex].qty = Number(value);
-          if (getCart[idIndex].qty <= 0) {
+          if (value <= 0) {
             getCart.splice(idIndex, 1);
-            localStorage.setItem("cart", JSON.stringify(getCart));
-            return setCart(getCart);
+            setCart(getCart);
+            return pushItem(getCart);
           }
           setCart(getCart);
-          return localStorage.setItem("cart", JSON.stringify(getCart));
+          return pushItem(getCart);
         default:
           getCart[idIndex].qty += value;
           setCart(getCart);
-          return localStorage.setItem("cart", JSON.stringify(getCart));
+          return pushItem(getCart);
       }
     } else {
       getCart.push({ id, qty: value });
       setCart(getCart);
-      return localStorage.setItem("cart", JSON.stringify(getCart));
+      return pushItem(getCart);
     }
   };
 

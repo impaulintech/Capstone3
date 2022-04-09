@@ -2,7 +2,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../utils/UserContext";
-import { CheckUser } from "../utils/CheckUser";
 
 const NavBar = () => {
   const toggle = () => {
@@ -19,11 +18,12 @@ const NavBar = () => {
   };
 
   const [userStatus, dispatch, localProduct] = useContext(UserContext);
-  let classX = CheckUser() === false ? "popup" : "cart";
+  let classX = userStatus.id === null ? "popup" : "cart";
+  let path = window.location.pathname;
+  let checkAdmin = userStatus.isAdmin === null ? true : false;
   return (
-    <React.Fragment>
-      {window.location.pathname === "/login" ||
-      window.location.pathname === "/register" ? (
+    <>
+      {path === "/login" || path === "/register" || path === "/checkout" ? (
         ""
       ) : (
         <nav className="nav">
@@ -36,11 +36,10 @@ const NavBar = () => {
             <div
               className="x"
               style={{
-                justifyContent:
-                  userStatus.isAdmin === null ? "space-evenly" : "flex-end",
+                justifyContent: checkAdmin ? "space-evenly" : "flex-end",
               }}
             >
-              {userStatus.isAdmin === null ? (
+              {checkAdmin ? (
                 <>
                   <img
                     src="https://i.imgur.com/oCcM5tC.png"
@@ -68,16 +67,16 @@ const NavBar = () => {
               <img
                 src="https://i.imgur.com/yMoNMdN.png"
                 width="30"
-                alt="menu"
+                alt="menus"
                 onClick={() => {
                   toggle();
                 }}
               />
             </div>
           </div>
-          <div className="menu toggle" onClick={() => toggle()}>
-            <ul>
-              {userStatus.isAdmin === null ? (
+          <div className="menu toggle">
+            <ul style={{ marginRight: `${checkAdmin ? "0px" : "90px"}` }}>
+              {checkAdmin ? (
                 <li>
                   <Link to="/">Home</Link>
                 </li>
@@ -86,7 +85,7 @@ const NavBar = () => {
                 <Link to="/products">Products</Link>
               </li>
               <li>
-                {userStatus.isAdmin === null ? (
+                {checkAdmin ? (
                   userStatus.id === null ? (
                     <a href="/login">Login</a>
                   ) : (
@@ -106,7 +105,7 @@ const NavBar = () => {
                   </a>
                 )}
               </li>
-              {userStatus.isAdmin === null ? (
+              {checkAdmin ? (
                 userStatus.id === null ? (
                   <li>
                     <a href="/register">Register</a>
@@ -115,17 +114,23 @@ const NavBar = () => {
               ) : null}
             </ul>
           </div>
-          {userStatus.isAdmin === null ? (
+          {checkAdmin ? (
             <div className="cart">
               <span>
-                <img
-                  src="https://i.imgur.com/oCcM5tC.png"
-                  width="25"
-                  onClick={() =>
-                    (document.querySelector(".popup-container").style.display =
-                      "block")
-                  }
-                />
+                {userStatus.id === null ? (
+                  <img
+                    src="https://i.imgur.com/oCcM5tC.png"
+                    width="25"
+                    onClick={() => {
+                      document.querySelector(".popup-container").style.display =
+                        "block";
+                    }}
+                  />
+                ) : (
+                  <Link to={"/order"}>
+                    <img src="https://i.imgur.com/oCcM5tC.png" width="25" />
+                  </Link>
+                )}
               </span>
               <span>
                 <img
@@ -142,7 +147,7 @@ const NavBar = () => {
           ) : null}
         </nav>
       )}
-    </React.Fragment>
+    </>
   );
 };
 

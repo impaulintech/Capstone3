@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
 import "../assets/style/popup.css";
 import { UserContext } from "../utils/UserContext";
-import { CheckUser, CheckAdmin } from "../utils/CheckUser";
 
 const PopUp = () => {
-  const [user, setUser] = useContext(UserContext);
-  let condition = user.isAdmin === null ? CheckUser() : CheckAdmin();
+  const [userStatus] = useContext(UserContext);
+  let condition = userStatus.id === null ? false : true;
   const alert =
     condition === false
       ? "https://i.imgur.com/192XSkg.png"

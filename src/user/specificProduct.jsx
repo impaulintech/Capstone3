@@ -11,7 +11,7 @@ import dummy from "../assets/images/dummy.png";
 const SpecificProduct = () => {
   const [userStatus, dispatch, localProduct] = useContext(UserContext);
   const { productId } = useParams();
-  let g = Math.floor(Math.random() * (localProduct.product.length - 4));
+  let g = Number(localStorage.getItem("spotlight"));
   const matchProduct = () => {
     if (localProduct.product.length === 0) {
       null;
